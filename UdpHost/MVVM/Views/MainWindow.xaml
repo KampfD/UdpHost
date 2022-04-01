@@ -1,0 +1,63 @@
+﻿<Window x:Class="UdpHost.MVVM.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:UdpHost.MVVM.ViewModels"
+        xmlns:v="clr-namespace:UdpHost.MVVM.Views"
+        xmlns:settings="clr-namespace:UdpHost.Properties"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
+        Icon="pack://application:,,,/Icon.ico"
+        FontFamily="Verdana" FontSize="12"
+        TextOptions.TextFormattingMode="Display"
+        Background="#FFF3F3F3"
+        Top="{Binding Path=Top, Source={x:Static settings:AppSettings.Settings}, Mode=TwoWay}"
+        Left="{Binding Path=Left, Source={x:Static settings:AppSettings.Settings}, Mode=TwoWay}"
+        Width="{Binding Path=Width, Source={x:Static settings:AppSettings.Settings}, Mode=TwoWay}"
+        Height="{Binding Path=Height, Source={x:Static settings:AppSettings.Settings}, Mode=TwoWay}"
+        MinHeight="400" MinWidth="450"
+        Style="{StaticResource ResourceKey=CustomizedWindowWithoutNonclientArea}"
+        Title="UdpHost">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:ExchangeViewModel}">
+            <v:ExchangeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InfoViewModel}">
+            <v:InfoView />
+        </DataTemplate>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=Loaded}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding Path=Closed}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Bottom">
+            <RadioButton Margin="1,0,0,0"
+                         Style="{StaticResource ResourceKey=TopMenuRadioButton}"
+                         Content="Обмен"
+                         IsChecked="{Binding Path=RBExchangeIsChecked}"
+                         Command="{Binding SetView}"
+                         CommandParameter="Exchange" />
+            <RadioButton Margin="0,0,0,0"
+                         Style="{StaticResource ResourceKey=TopMenuRadioButton}"
+                         Content="Инфо"
+                         Command="{Binding SetView}"
+                         CommandParameter="Info" Cursor="Hand" />
+        </StackPanel>
+        <ContentControl Grid.Row="1" 
+                        Background="Red"
+                        Content="{Binding CurrentView}"/>
+    </Grid>
+</Window>

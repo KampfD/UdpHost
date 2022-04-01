@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e27abfd9-c77c-4998-bd1e-ab1da0275ea1": {
+      "ProjectGuid": "e27abfd9-c77c-4998-bd1e-ab1da0275ea1",
+      "DisplayName": "UdpHost",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
